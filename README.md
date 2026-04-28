@@ -81,14 +81,29 @@ https://huggingface.co/settings/tokens → **New token** → Type: **Read** → 
 
 ---
 
-### 6. MCP 설정 파일 생성
+### 6. MCP 설정
+
+MCP 서버 설정값 (공통):
+```
+command : node
+args    : /절대경로/smart-connections-mcp/dist/index.js
+env     : SMART_VAULT_PATH=/절대경로/career-vault
+          HF_TOKEN=hf_발급받은_토큰
+```
+
+> 경로 확인: `echo ~/smart-connections-mcp/dist/index.js`
+
+사용하는 CLI에 따라 아래 중 하나만 설정하면 됩니다.
+
+---
+
+#### Claude Code
 
 ```bash
 cd ~/career-vault
 cp .mcp.json.example .mcp.json
+# .mcp.json 열어서 경로/토큰 수정
 ```
-
-`.mcp.json` 열어서 경로와 토큰 수정:
 
 ```json
 {
@@ -105,20 +120,61 @@ cp .mcp.json.example .mcp.json
 }
 ```
 
-> **경로 확인**: `echo ~/smart-connections-mcp/dist/index.js` 로 절대경로 확인
+#### Codex CLI
+
+`~/.codex/config.json` 에 추가:
+
+```json
+{
+  "mcpServers": {
+    "smart-connections": {
+      "command": "node",
+      "args": ["/Users/YOUR_NAME/smart-connections-mcp/dist/index.js"],
+      "env": {
+        "SMART_VAULT_PATH": "/Users/YOUR_NAME/career-vault",
+        "HF_TOKEN": "hf_발급받은_토큰"
+      }
+    }
+  }
+}
+```
+
+#### Gemini CLI
+
+`~/.gemini/settings.json` 에 추가:
+
+```json
+{
+  "mcpServers": {
+    "smart-connections": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["/Users/YOUR_NAME/smart-connections-mcp/dist/index.js"],
+      "env": {
+        "SMART_VAULT_PATH": "/Users/YOUR_NAME/career-vault",
+        "HF_TOKEN": "hf_발급받은_토큰"
+      }
+    }
+  }
+}
+```
 
 ---
 
-### 7. Claude Code 실행
+### 7. AI CLI 실행
+
+사용하는 CLI에 따라 vault 폴더에서 실행:
 
 ```bash
 cd ~/career-vault
-claude
+
+claude    # Claude Code — CLAUDE.md 자동 읽힘
+codex     # Codex CLI  — AGENTS.md 자동 읽힘
+gemini    # Gemini CLI — GEMINI.md 자동 읽힘
 ```
 
-처음 실행하면 MCP 서버 승인 프롬프트 → **Allow** 선택
-
-첫 `search_notes` 호출 시 bge-micro-v2 모델 다운로드 (~50MB, 1회만).
+첫 실행 시 MCP 서버 승인 프롬프트 → **Allow** 선택
+첫 `search_notes` 호출 시 모델 다운로드 (~50MB, 1회만)
 
 ---
 
