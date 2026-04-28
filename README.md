@@ -43,7 +43,7 @@ npm install -g @anthropic-ai/claude-code
 ### 2. 이 repo를 Obsidian vault로 열기
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/career-vault-template.git ~/career-vault
+git clone https://github.com/niletheking/career-vault-template.git ~/career-vault
 ```
 
 Obsidian 실행 → **Open folder as vault** → `~/career-vault` 선택
