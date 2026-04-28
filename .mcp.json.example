@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "smart-connections": {
+      "command": "node",
+      "args": ["/ABSOLUTE/PATH/TO/smart-connections-mcp/dist/index.js"],
+      "env": {
+        "SMART_VAULT_PATH": "/ABSOLUTE/PATH/TO/THIS/VAULT",
+        "HF_TOKEN": "hf_your_token_here"
+      }
+    }
+  }
+}
