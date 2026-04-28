@@ -2,3 +2,4 @@ companies/
 .smart-env/
 .obsidian/
 .DS_Store
+.mcp.json
