@@ -107,8 +107,9 @@ career-vault/
 
 - **Step 1**: JD & 회사 심층 조사 → `companies/{회사명}/JD.md` 작성
 - **Step 2**: 무기 매핑 — `_meta/무기_마스터_목록.md` 기반 키워드 매핑만 (텍스트 작성 금지)
-- **Step 3**: 글 작성 — 자소서 문항별 텍스트 or 포트폴리오 섹션 작성
-- **Step 4**: 피드백 루프 — 개발자 면접관 / HR / 서류심사자 입장 각각 시뮬레이션
+- **Step 3**: 방향·키워드 확정 — 자소서 문항별 / 포트폴리오 섹션별 키워드·각도 확정 (텍스트 작성 금지, 사용자 확인 후 Step 4)
+- **Step 4**: 글 작성 — 방향 확정된 자소서 문항별 텍스트(플레인텍스트) or 포트폴리오 섹션 작성
+- **Step 5**: 피드백 루프 — 개발자 면접관 / HR / 서류심사자 입장 각각 시뮬레이션
 
 세부 규칙: `_meta/PORTFOLIO_WRITING_RULES.md`, `_meta/JOB_APPLICATION_METHODOLOGY.md` 참조
 
@@ -132,8 +133,23 @@ E{번호}_{경험명}.md           예) E1_기업협력_프로젝트.md
 
 ---
 
-## Semantic Search (MCP 연결 시)
+## MCP 툴 가이드 (Smart Connections + Smart Lookup)
 
-grep 대신 벡터 검색 우선 사용:
-- `search_notes("쿼리")` — 관련 무기 노트 검색
-- `get_similar_notes("파일경로")` — 유사 노트 탐색
+MCP 서버(`smart-connections-mcp`) 연결 시 아래 6개 툴 사용 가능.
+**경로를 아는 노트는 MCP 대신 직접 파일 읽기** — 빠르고 오버헤드 없음.
+
+둘 다 시맨틱(벡터) 기반이지만 탐색의 두 단계로 사용:
+1. `search_notes` (Smart Lookup 역할) → 쿼리로 **처음 노트 찾기**
+2. `get_similar_notes` (Smart Connections 역할) → 찾은 노트 기준으로 **연관 무기 확장**
+
+| 툴 | 언제 사용 |
+|---|---|
+| `search_notes(query)` | 1단계: JD 키워드·개념으로 관련 무기 노트 탐색. 경로 모를 때 진입점 |
+| `get_similar_notes(note_path)` | 2단계: 찾은 노트에서 유사 노트 확장 탐색 |
+| `get_connection_graph(note_path)` | 여러 경험에 걸친 멀티홉 연결 스토리 엮을 때 |
+| `get_note_content(note_path)` | 경로 불확실할 때만. 경로 알면 직접 파일 읽기 사용 |
+| `get_stats()` | 임베딩 현황 확인 (몇 개 노트 인덱싱됐는지) |
+| `get_embedding_neighbors(vector)` | 고급 사용 — 일반 워크플로우에서는 사용 안 함 |
+
+### Smart Lookup (Obsidian 플러그인)
+Obsidian UI 경험용 (1단계 진입점 역할). `search_notes`가 MCP에서 동일 역할 수행.
