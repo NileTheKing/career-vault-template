@@ -17,7 +17,10 @@ Obsidian Vault (노트 저장소)
 
 ---
 
-## 설치 (macOS 기준)
+## 설치
+
+<details>
+<summary>🍎 macOS</summary>
 
 ### 1. 필수 도구 설치
 
@@ -31,28 +34,76 @@ Obsidian Vault (노트 저장소)
 brew install node
 ```
 
-**Claude Code**:
+**AI CLI** (택 1):
 ```bash
+# Claude Code (공식 설치 페이지 권장: https://claude.ai/code)
 npm install -g @anthropic-ai/claude-code
+
+# 또는 Codex
+brew install --cask codex
+# 또는 Gemini
+brew install gemini-cli
 ```
 
 **Obsidian**: https://obsidian.md/download
+
+**Git**:
+```bash
+brew install git
+```
+
+</details>
+
+<details>
+<summary>🪟 Windows</summary>
+
+### 1. 필수 도구 설치
+
+**Node.js 18+**: https://nodejs.org → Windows Installer 다운로드
+
+**AI CLI** (택 1):
+```powershell
+# Claude Code (공식 설치 페이지 권장: https://claude.ai/code)
+npm install -g @anthropic-ai/claude-code
+
+# 또는 Codex (GitHub Releases에서 Windows 바이너리 직접 다운)
+# https://github.com/openai/codex/releases
+# 또는 npm으로
+npm install -g @openai/codex
+
+# 또는 Gemini
+npm install -g @google/gemini-cli
+```
+
+**Obsidian**: https://obsidian.md/download → Windows 선택
+
+**Git**: https://git-scm.com/download/win
+
+> ⚠️ 이후 경로 표기는 `C:\Users\이름\` 형식 사용. `~/` 대신 절대경로 입력.
+
+</details>
 
 ---
 
 ### 2. 이 repo를 Obsidian vault로 열기
 
+**macOS:**
 ```bash
 git clone https://github.com/niletheking/career-vault-template.git ~/career-vault
 ```
 
-Obsidian 실행 → **Open folder as vault** → `~/career-vault` 선택
+**Windows (PowerShell):**
+```powershell
+git clone https://github.com/niletheking/career-vault-template.git C:\Users\이름\career-vault
+```
+
+Obsidian 실행 → **Open folder as vault** → 클론한 폴더 선택
 
 ---
 
 ### 3. Smart Connections 플러그인 설치
 
-Obsidian → Settings (⌘,) → Community plugins → **Turn on community plugins** → Browse
+Obsidian → Settings → Community plugins → **Turn on community plugins** → Browse
 
 `Smart Connections` 검색 → Install → Enable
 
@@ -64,9 +115,18 @@ vault 노트가 자동으로 임베딩됨 (우측 패널에서 진행 상황 확
 
 ### 4. smart-connections-mcp 서버 설치
 
+**macOS:**
 ```bash
 git clone https://github.com/msdanyg/smart-connections-mcp ~/smart-connections-mcp
 cd ~/smart-connections-mcp
+npm install
+npm run build
+```
+
+**Windows (PowerShell):**
+```powershell
+git clone https://github.com/msdanyg/smart-connections-mcp C:\Users\이름\smart-connections-mcp
+cd C:\Users\이름\smart-connections-mcp
 npm install
 npm run build
 ```
@@ -84,14 +144,17 @@ https://huggingface.co/settings/tokens → **New token** → Type: **Read** → 
 ### 6. MCP 설정
 
 MCP 서버 설정값 (공통):
-```
-command : node
-args    : /절대경로/smart-connections-mcp/dist/index.js
-env     : SMART_VAULT_PATH=/절대경로/career-vault
-          HF_TOKEN=hf_발급받은_토큰
+
+**macOS** 경로 확인:
+```bash
+echo ~/smart-connections-mcp/dist/index.js
+# 예) /Users/yourname/smart-connections-mcp/dist/index.js
 ```
 
-> 경로 확인: `echo ~/smart-connections-mcp/dist/index.js`
+**Windows** 경로 확인:
+```powershell
+echo C:\Users\이름\smart-connections-mcp\dist\index.js
+```
 
 사용하는 CLI에 따라 아래 중 하나만 설정하면 됩니다.
 
@@ -99,20 +162,26 @@ env     : SMART_VAULT_PATH=/절대경로/career-vault
 
 #### Claude Code
 
+**macOS:**
 ```bash
-cd ~/career-vault
-cp .mcp.json.example .mcp.json
-# .mcp.json 열어서 경로/토큰 수정
+cd ~/career-vault && cp .mcp.json.example .mcp.json
 ```
+**Windows:**
+```powershell
+cd C:\Users\이름\career-vault
+copy .mcp.json.example .mcp.json
+```
+
+`.mcp.json` 열어서 경로/토큰 수정:
 
 ```json
 {
   "mcpServers": {
     "smart-connections": {
       "command": "node",
-      "args": ["/Users/YOUR_NAME/smart-connections-mcp/dist/index.js"],
+      "args": ["/Users/이름/smart-connections-mcp/dist/index.js"],
       "env": {
-        "SMART_VAULT_PATH": "/Users/YOUR_NAME/career-vault",
+        "SMART_VAULT_PATH": "/Users/이름/career-vault",
         "HF_TOKEN": "hf_발급받은_토큰"
       }
     }
@@ -120,18 +189,20 @@ cp .mcp.json.example .mcp.json
 }
 ```
 
+> Windows: args 경로를 `C:\\Users\\이름\\smart-connections-mcp\\dist\\index.js` 형식으로 (역슬래시 2개)
+
 #### Codex CLI
 
-`~/.codex/config.json` 에 추가:
+`~/.codex/config.json` (Windows: `C:\Users\이름\.codex\config.json`) 에 추가:
 
 ```json
 {
   "mcpServers": {
     "smart-connections": {
       "command": "node",
-      "args": ["/Users/YOUR_NAME/smart-connections-mcp/dist/index.js"],
+      "args": ["/Users/이름/smart-connections-mcp/dist/index.js"],
       "env": {
-        "SMART_VAULT_PATH": "/Users/YOUR_NAME/career-vault",
+        "SMART_VAULT_PATH": "/Users/이름/career-vault",
         "HF_TOKEN": "hf_발급받은_토큰"
       }
     }
@@ -141,7 +212,7 @@ cp .mcp.json.example .mcp.json
 
 #### Gemini CLI
 
-`~/.gemini/settings.json` 에 추가:
+`~/.gemini/settings.json` (Windows: `C:\Users\이름\.gemini\settings.json`) 에 추가:
 
 ```json
 {
@@ -149,9 +220,9 @@ cp .mcp.json.example .mcp.json
     "smart-connections": {
       "type": "stdio",
       "command": "node",
-      "args": ["/Users/YOUR_NAME/smart-connections-mcp/dist/index.js"],
+      "args": ["/Users/이름/smart-connections-mcp/dist/index.js"],
       "env": {
-        "SMART_VAULT_PATH": "/Users/YOUR_NAME/career-vault",
+        "SMART_VAULT_PATH": "/Users/이름/career-vault",
         "HF_TOKEN": "hf_발급받은_토큰"
       }
     }
