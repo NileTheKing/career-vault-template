@@ -1,14 +1,32 @@
-# Career Vault Template
+# Career Vault
 
-개발자 취업 지원을 위한 **Obsidian + AI CLI + Smart Connections** 통합 시스템.
+취업 지원할 때마다 이런 상황 겪어본 적 있지 않으세요?
 
-JD가 주어지면 벡터 검색으로 관련 경험을 찾고 → AI가 자소서/포트폴리오 초안을 작성한다.
+- AI한테 자소서 부탁했더니 내 경험이 아닌 뻔한 글이 나옴
+- JD에 맞춰 경험을 꺼내 쓰려는데, 억지로 끼워 맞추는 느낌
+- 미리 정리해뒀어도 세션마다 같은 내용 복붙해서 다시 설명
+- 비슷한 파일이 복제되다가 어느 게 최신인지 모르게 됨
+- 컨텍스트가 잘리면 AI가 단편적으로 판단해서 큰 그림을 못 봄
 
+Career Vault는 경험을 원자화해서 벡터 DB로 관리합니다.
+JD가 들어오면 의미 기반으로 관련 경험을 찾고,
+노트 간 연결 그래프로 여러 프로젝트에 걸친 스토리도 엮어냅니다.
+자료는 쓸수록 쌓이고, 다음 지원은 더 빨라집니다.
+
+Obsidian + Smart Connections(임베딩) + MCP + AI CLI 조합으로
+로컬에서 완전히 돌아가고, Claude / Codex / Gemini 모두 지원합니다.
+
+---
+
+## 빠른 시작
+
+```bash
+git clone https://github.com/niletheking/career-vault-template.git ~/career-vault
+cd ~/career-vault
+npx career-vault-setup
 ```
-Obsidian Vault  ←→  Smart Connections (임베딩)
-                         ↕ MCP
-                    AI CLI (Claude / Codex / Gemini)
-```
+
+세팅 완료 후 → Obsidian에서 vault 열기 → AI CLI 실행하면 온보딩 자동 시작.
 
 ---
 
@@ -55,7 +73,8 @@ https://obsidian.md/download → OS에 맞게 다운로드
 | CLI | 공식 링크 | 설치 |
 |---|---|---|
 | **Claude Code** | https://claude.ai/code | 공식 페이지 안내대로 |
-| **Codex** | https://github.com/openai/codex | `brew install --cask codex` (macOS) / GitHub Releases 바이너리 (Windows) |
+| **Codex** | https://github.com/openai/codex | `brew install --cask codex` (macOS/HomeBrew) / 
+`npm install -g @openai/codex` (Windows) |
 | **Gemini** | https://github.com/google-gemini/gemini-cli | `brew install gemini-cli` (macOS) / `npm install -g @google/gemini-cli` (Windows) |
 
 셋 다 MCP 지원. 여러 개 설치해도 됨.
